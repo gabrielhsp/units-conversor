@@ -11,6 +11,7 @@ struct ContentView: View {
     // MARK: - Properties
     @State private var temperature: Double = 20
     @State private var temperatureUnitEntrancy: UnitTemperature = .celsius
+    @State private var temperatureUnitConversion: UnitTemperature = .celsius
     private let temperatureUnits: [UnitTemperature] = [.celsius, .fahrenheit, .kelvin]
     
     // MARK: - Computed Properties
@@ -25,18 +26,31 @@ struct ContentView: View {
                 }
                 .pickerStyle(.segmented)
             } header : {
-                Text("What's the conversion unit?")
+                Text("Unit Conversion")
             }
             
             Section {
                 TextField("Temperature", value: $temperature, format: .number)
                     .keyboardType(.numberPad)
             } header : {
-                Text("Temperature to convert:")
+                Text("Temperature")
+            }
+            
+            Section {
+                Picker("Temperature unit to convert", selection: $temperatureUnitConversion) {
+                    ForEach(temperatureUnits, id: \.self) {
+                        Text($0.symbol)
+                    }
+                }
+                .pickerStyle(.segmented)
+            } header : {
+                Text("Convert temperature in \(temperatureUnitEntrancy.symbol) to:")
             }
             
             Section {
                 Text("")
+            } header : {
+                Text("Temperature converted")
             }
         }
     }
