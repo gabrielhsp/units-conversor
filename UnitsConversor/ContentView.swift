@@ -15,6 +15,12 @@ struct ContentView: View {
     private let temperatureUnits: [UnitTemperature] = [.celsius, .fahrenheit, .kelvin]
     
     // MARK: - Computed Properties
+    private var temperatureConverted: Measurement<UnitTemperature> {
+        return Measurement(
+            value: temperature,
+            unit: temperatureUnitEntrancy
+        ).converted(to: temperatureUnitConversion)
+    }
     
     var body: some View {
         Form {
@@ -48,7 +54,7 @@ struct ContentView: View {
             }
             
             Section {
-                Text("")
+                Text(temperatureConverted.description)
             } header : {
                 Text("Temperature converted")
             }
